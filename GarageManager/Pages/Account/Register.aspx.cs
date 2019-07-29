@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using GarageManager.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using System;
@@ -38,6 +39,19 @@ namespace GarageManager.Pages.Account
 
                     if (result.Succeeded)
                     {
+
+                        UserInformation info = new UserInformation
+                        {
+                            Address = txtAddress.Text,
+                            firstName = txtFirstName.Text,
+                            lastName = txtLastName.Text,
+                            PostalCode = txtPostalCode.Text,
+                            GUID = user.Id,
+                        };
+
+                        UserInfoModel model = new UserInfoModel();
+                        model.insertUserInformation(info);
+
                         var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
 
 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GarageDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GarageDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="ID" />
@@ -44,14 +44,9 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="IsInCart" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GarageDB.dbo.UserInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserInformation">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="GUID" />
-            <PropertyRef Name="Address" />
-            <PropertyRef Name="PostalCode" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GUID" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -79,22 +74,14 @@ warning 6002: The table/view 'GarageDB.dbo.UserInformation' does not have a prim
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserInformation" EntityType="Self.UserInformation" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserInformation].[ID] AS [ID], 
-    [UserInformation].[GUID] AS [GUID], 
-    [UserInformation].[firstName] AS [firstName], 
-    [UserInformation].[lastName] AS [lastName], 
-    [UserInformation].[Address] AS [Address], 
-    [UserInformation].[PostalCode] AS [PostalCode]
-    FROM [dbo].[UserInformation] AS [UserInformation]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="UserInformation" EntityType="Self.UserInformation" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Product_ProductType" Association="Self.FK_Product_ProductType">
             <End Role="ProductType" EntitySet="ProductType" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GarageDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -139,6 +126,17 @@ warning 6002: The table/view 'GarageDB.dbo.UserInformation' does not have a prim
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsInCart" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserInformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Product_ProductType">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -158,26 +156,12 @@ warning 6002: The table/view 'GarageDB.dbo.UserInformation' does not have a prim
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductTypes" EntityType="Self.ProductType" />
           <EntitySet Name="Purchases" EntityType="Self.Purchase" />
+          <EntitySet Name="UserInformations" EntityType="Self.UserInformation" />
           <AssociationSet Name="FK_Product_ProductType" Association="Self.FK_Product_ProductType">
             <End Role="ProductType" EntitySet="ProductTypes" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="UserInformations" EntityType="GarageDBModel.UserInformation" />
         </EntityContainer>
-        <EntityType Name="UserInformation">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="GUID" />
-            <PropertyRef Name="Address" />
-            <PropertyRef Name="PostalCode" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -230,12 +214,12 @@ warning 6002: The table/view 'GarageDB.dbo.UserInformation' does not have a prim
           <EntitySetMapping Name="UserInformations">
             <EntityTypeMapping TypeName="GarageDBModel.UserInformation">
               <MappingFragment StoreEntitySet="UserInformation">
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
