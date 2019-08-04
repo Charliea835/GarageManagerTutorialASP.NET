@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GarageManager.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,6 +23,10 @@ namespace GarageManager
                 linkRegister.Visible = false;
                 linkLogout.Visible = true;
                 litStatus.Visible = true;
+
+                PurchaseModel model = new PurchaseModel();
+                string userId = HttpContext.Current.User.Identity.GetUserId();
+                litStatus.Text = string.Format("{0}({1})", Context.User.Identity.Name, model.getAmountOfOrders(userId));
             }
             else
             {

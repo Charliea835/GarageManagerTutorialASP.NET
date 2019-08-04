@@ -27,7 +27,7 @@
                         <li> <asp:HyperLink ID ="Hyperlink4" runat="server" NavigateUrl="~/Pages/Management/Management.aspx">Management</asp:HyperLink></li>
                         <li style="float:right">
                             <asp:HyperLink ID ="linkRegister" runat="server" NavigateUrl="~/Pages/Account/Register.aspx">Register</asp:HyperLink>
-                            <asp:HyperLink ID ="litStatus" runat="server"></asp:HyperLink>
+                            <asp:HyperLink ID ="litStatus" runat="server" NavigateUrl="~/Pages/ShoppingCart.aspx"></asp:HyperLink>
                         </li>
 
                         <li style="float:right">

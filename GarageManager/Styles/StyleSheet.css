@@ -138,3 +138,26 @@ a:visited {
     -moz-box-shadow: 0 0 25px #ccc;
     box-shadow: 0 0 25px #CCC;
 }
+
+/*Shopping Cart Page */
+.CartTable {
+    text-align: center;
+    border: 15px solid #f5f4f2;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+    .CartTable input {
+        width: 65px;
+        height: 65px;
+    }
+
+    .CartTable h4 {
+        padding: 0;
+        margin: 0;
+    }
+
+    .CartTable tr td select {
+        width: 100px;
+    }

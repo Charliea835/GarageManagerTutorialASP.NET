@@ -131,6 +131,8 @@
     <Content Include="Pages\Management\ManageProducts.aspx" />
     <Content Include="Pages\Management\ManageProductTypes.aspx" />
     <Content Include="Pages\ProductDescription.aspx" />
+    <Content Include="Pages\ShoppingCart.aspx" />
+    <Content Include="Pages\Success.aspx" />
     <Content Include="Styles\StyleSheet.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -215,6 +217,20 @@
     </Compile>
     <Compile Include="Pages\ProductDescription.aspx.designer.cs">
       <DependentUpon>ProductDescription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ShoppingCart.aspx.cs">
+      <DependentUpon>ShoppingCart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ShoppingCart.aspx.designer.cs">
+      <DependentUpon>ShoppingCart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Success.aspx.cs">
+      <DependentUpon>Success.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Success.aspx.designer.cs">
+      <DependentUpon>Success.aspx</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>

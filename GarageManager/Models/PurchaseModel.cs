@@ -68,5 +68,56 @@ namespace GarageManager.Models
                 return "Error:" + e;
             }
         }
+
+        public List<Purchase>getOrdersInCart(string userID)
+        {
+            GarageDBEntities db = new GarageDBEntities();
+            List<Purchase> orders = (from x in db.Purchases
+                                      where x.CustomerID == userID
+                                      && x.IsInCart
+                                      orderby x.Date
+                                      select x).ToList();
+            return orders;
+        }
+
+        public int getAmountOfOrders(string userID)
+        {
+            try
+            {
+                GarageDBEntities db = new GarageDBEntities();
+                int amount = (from x in db.Purchases
+                              where x.CustomerID == userID
+                              && x.IsInCart
+                              select x.Amount).Sum();
+                return amount;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public void updateQuantity(int id, int quantity)
+        {
+            GarageDBEntities db = new GarageDBEntities();
+            Purchase purchase = db.Purchases.Find(id);
+            purchase.Amount = quantity;
+            db.SaveChanges();
+        }
+
+        public void markOrdersAsPaid(List<Purchase>purchases)
+        {
+            GarageDBEntities db = new GarageDBEntities();
+            if (purchases != null)
+            {
+                foreach(Purchase purchase in purchases)
+                {
+                    Purchase oldPurchases = db.Purchases.Find(purchase.ID);
+                    oldPurchases.Date = DateTime.Now;
+                    oldPurchases.IsInCart = false;
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }
